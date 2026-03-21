@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swathi Kumar — CS Student & Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#faf8f3;--cream2:#f3efe6;--cream3:#ece7da;--ink:#1c1814;--ink2:#3d3830;--muted:#8a8070;--pink:#d63a7a;--pink-soft:#fce8f1;--blue:#1a5fff;--blue-soft:#e0eaff;--green:#0a9e72;--green-soft:#d2f5eb;--border:rgba(28,24,20,0.09);--border-strong:rgba(28,24,20,0.18);--radius:14px;--radius-lg:20px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Instrument Sans",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+.cursor{width:10px;height:10px;background:var(--pink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.34,1.56,.64,1),height .3s cubic-bezier(.34,1.56,.64,1),background .3s;}
+.cursor-ring{width:34px;height:34px;border:1.5px solid var(--pink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;transition:width .4s cubic-bezier(.34,1.56,.64,1),height .4s cubic-bezier(.34,1.56,.64,1),border-color .3s;}
+.cursor.hov{width:20px;height:20px;background:var(--blue);}
+.cursor-ring.hov{width:56px;height:56px;border-color:var(--blue);opacity:.25;}
+
+/* PAGE LOADER */
+.page-loader{position:fixed;inset:0;background:var(--ink);z-index:9000;display:flex;align-items:center;justify-content:center;transition:opacity .8s ease,visibility .8s ease;}
+.page-loader.done{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-text{font-family:"Playfair Display",serif;font-size:clamp(2rem,5vw,4rem);color:var(--cream);font-weight:700;letter-spacing:-.02em;overflow:hidden;display:flex;gap:.3em;}
+.loader-word{display:inline-block;transform:translateY(110%);animation:loaderUp .85s cubic-bezier(.16,1,.3,1) forwards;}
+.loader-word:nth-child(2){animation-delay:.14s;}
+.loader-word:nth-child(3){animation-delay:.28s;color:var(--pink);}
+@keyframes loaderUp{to{transform:translateY(0);}}
+.loader-bar{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--blue),var(--green));animation:loadBar 1.3s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes loadBar{from{width:0}to{width:100%}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(250,248,243,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding .4s ease;}
+nav.scrolled{padding:.7rem 3rem;}
+.nav-logo{font-family:"Space Mono",monospace;font-weight:700;font-size:.95rem;color:var(--ink);text-decoration:none;}
+.nav-logo span{color:var(--pink);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:"Space Mono",monospace;font-size:.68rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--ink);transition:width .3s ease;}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{font-family:"Space Mono",monospace;font-size:.68rem;font-weight:700;padding:.48rem 1.1rem;background:var(--ink);color:var(--cream);border-radius:100px;text-decoration:none;transition:background .25s,transform .25s;}
+.nav-cta:hover{background:var(--pink);transform:translateY(-2px);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%);opacity:.55;}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.15;pointer-events:none;animation:blobFloat 8s ease-in-out infinite;}
+.blob:nth-child(2){animation-delay:-2.5s;}
+.blob:nth-child(3){animation-delay:-5s;}
+@keyframes blobFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-22px) scale(1.04);}}
+.hero-eyebrow{font-family:"Space Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:8px;margin-bottom:1.4rem;opacity:0;animation:heroFadeUp .8s cubic-bezier(.16,1,.3,1) 1.4s forwards;}
+.hero-eyebrow::before{content:"";display:inline-block;width:22px;height:1.5px;background:var(--green);}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;animation:pdot 2s ease-in-out infinite;}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.6);}}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(3rem,7.5vw,6.5rem);font-weight:700;line-height:.95;letter-spacing:-.02em;margin-bottom:1.4rem;}
+.hero-line{display:block;overflow:hidden;}
+.hero-line-inner{display:block;transform:translateY(110%);animation:lineUp .9s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-line:nth-child(1) .hero-line-inner{animation-delay:1.5s;}
+.hero-line:nth-child(2) .hero-line-inner{animation-delay:1.65s;}
+.hero-line:nth-child(3) .hero-line-inner{animation-delay:1.8s;}
+@keyframes lineUp{to{transform:translateY(0);}}
+.outline{-webkit-text-stroke:2px var(--ink);color:transparent;}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:460px;margin-bottom:2.2rem;line-height:1.75;opacity:0;animation:heroFadeUp .8s cubic-bezier(.16,1,.3,1) 1.95s forwards;}
+.hero-actions{display:flex;gap:.9rem;flex-wrap:wrap;opacity:0;animation:heroFadeUp .8s cubic-bezier(.16,1,.3,1) 2.1s forwards;}
+.scroll-hint{position:absolute;bottom:2.2rem;left:3rem;font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:0;animation:heroFadeUp .8s 2.3s forwards;}
+.scroll-hint::after{content:"";display:block;width:1px;height:36px;background:linear-gradient(180deg,var(--muted),transparent);animation:sp 2s infinite;}
+@keyframes sp{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.btn-primary{font-family:"Space Mono",monospace;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.8rem 1.8rem;background:var(--ink);color:var(--cream);border-radius:100px;text-decoration:none;transition:background .25s,transform .25s;border:none;cursor:none;}
+.btn-primary:hover{background:var(--pink);transform:translateY(-2px);}
+.btn-outline{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;padding:.8rem 1.8rem;border:1.5px solid var(--border-strong);border-radius:100px;text-decoration:none;color:var(--ink);transition:border-color .25s,background .25s,color .25s,transform .25s;}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-soft);transform:translateY(-2px);}
+
+/* STAT ROW */
+.stat-row{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.stat-item{flex:1;padding:1.6rem 2rem;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .3s;}
+.stat-item:last-child{border-right:none;}
+.stat-item:hover{background:var(--cream2);}
+.stat-item::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--pink),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.stat-item:hover::after{transform:scaleX(1);}
+.stat-num{font-family:"Playfair Display",serif;font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:.3rem;}
+.stat-lbl{font-family:"Space Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* SECTIONS */
+.section{padding:5.5rem 3rem;max-width:1120px;margin:0 auto;}
+.sec-eyebrow{font-family:"Space Mono",monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
+.sec-eyebrow::before{content:"";display:block;width:16px;height:1px;background:var(--muted);}
+.sec-title{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.1;}
+hr{border:none;border-top:1px solid var(--border);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:start;}
+.about-text{font-size:1rem;color:var(--ink2);}
+.about-text p{margin-bottom:1rem;}
+.about-text strong{color:var(--ink);font-weight:600;}
+.info-stack{display:flex;flex-direction:column;gap:1px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--border);}
+.info-row{background:var(--cream);padding:1rem 1.3rem;display:flex;align-items:center;gap:.9rem;transition:background .2s,transform .25s;}
+.info-row:hover{background:var(--cream2);transform:translateX(4px);}
+.info-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.info-lbl{font-family:"Space Mono",monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.info-val{font-weight:600;font-size:.88rem;color:var(--ink);margin-top:1px;}
+
+/* EDUCATION */
+.edu-stack{display:flex;flex-direction:column;gap:1px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--border);}
+.edu-row{background:var(--cream);padding:1.4rem 1.8rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;transition:background .2s;}
+.edu-row:hover{background:var(--cream2);}
+.edu-school{font-weight:600;font-size:.95rem;color:var(--ink);}
+.edu-degree{font-size:.85rem;color:var(--muted);margin-top:2px;}
+.edu-year{font-family:"Space Mono",monospace;font-size:.68rem;color:var(--muted);text-align:right;}
+.edu-score{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;text-align:right;}
+
+/* EXPERIENCE */
+.exp-stack{display:flex;flex-direction:column;gap:12px;}
+.exp-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;background:var(--cream);display:flex;gap:1.2rem;align-items:flex-start;transition:background .2s,border-color .2s,transform .35s cubic-bezier(.34,1.56,.64,1);}
+.exp-card:hover{background:var(--cream2);border-color:var(--border-strong);transform:translateX(6px);}
+.exp-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-family:"Space Mono",monospace;font-size:.7rem;}
+.exp-title{font-weight:600;font-size:.95rem;color:var(--ink);}
+.exp-org{font-size:.85rem;color:var(--muted);margin-top:2px;}
+.exp-period{font-family:"Space Mono",monospace;font-size:.62rem;color:var(--muted);margin-top:4px;letter-spacing:.05em;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7rem;}
+
+/* SKILLS */
+.skills-mosaic{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--border);}
+.skill-cell{background:var(--cream);padding:1.6rem;transition:background .2s;}
+.skill-cell:hover{background:var(--cream2);}
+.skill-cat{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;display:flex;align-items:center;gap:7px;}
+.sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:"Space Mono",monospace;font-size:.65rem;padding:3px 10px;border-radius:100px;border:1px solid;transition:transform .2s;}
+.tag:hover{transform:scale(1.05);}
+.tp{color:var(--pink);border-color:rgba(214,58,122,.25);background:var(--pink-soft);}
+.tb{color:var(--blue);border-color:rgba(26,95,255,.25);background:var(--blue-soft);}
+.tg{color:var(--green);border-color:rgba(10,158,114,.25);background:var(--green-soft);}
+.tk{color:var(--ink2);border-color:var(--border);background:var(--cream2);}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;}
+.proj-card{background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;text-decoration:none;color:inherit;display:block;cursor:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1),border-color .3s,box-shadow .4s;}
+.proj-card:hover{transform:translateY(-8px) scale(1.01);border-color:var(--border-strong);box-shadow:0 24px 50px rgba(28,24,20,.1);}
+.proj-top{padding:1.8rem 1.8rem 1.4rem;border-bottom:1px solid var(--border);min-height:150px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.proj-top::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent);pointer-events:none;}
+.proj-num{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;}
+.proj-name{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;line-height:1.2;letter-spacing:-.01em;}
+.proj-badge{font-family:"Space Mono",monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid;display:inline-block;margin-top:.7rem;width:fit-content;}
+.proj-bot{padding:1.3rem 1.8rem;}
+.proj-desc{font-size:.86rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;}
+.proj-tech{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;}
+.proj-tech span{font-family:"Space Mono",monospace;font-size:.6rem;padding:2px 8px;background:var(--cream2);color:var(--ink2);border-radius:5px;border:1px solid var(--border);}
+.proj-arrow{font-family:"Space Mono",monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:5px;transition:gap .3s cubic-bezier(.34,1.56,.64,1),color .2s;}
+.proj-card:hover .proj-arrow{gap:12px;color:var(--ink);}
+
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;}
+.ach-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;background:var(--cream);display:flex;gap:1rem;align-items:flex-start;transition:background .2s,border-color .2s,transform .35s cubic-bezier(.34,1.56,.64,1);}
+.ach-card:hover{background:var(--cream2);border-color:var(--border-strong);transform:translateY(-5px);}
+.ach-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.ach-title{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.3rem;}
+.ach-desc{font-size:.8rem;color:var(--muted);line-height:1.5;}
+
+/* HACKATHONS */
+.hack-stack{display:flex;flex-direction:column;gap:12px;}
+.hack-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.8rem;background:var(--cream);transition:background .2s,border-color .2s,transform .3s;}
+.hack-card:hover{background:var(--cream2);border-color:var(--border-strong);transform:translateX(5px);}
+.hack-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.8rem;}
+.hack-name{font-weight:600;font-size:.95rem;color:var(--ink);}
+.hack-year{font-family:"Space Mono",monospace;font-size:.62rem;color:var(--muted);}
+.hack-result{font-family:"Space Mono",monospace;font-size:.62rem;letter-spacing:.07em;padding:3px 9px;border-radius:100px;border:1px solid;white-space:nowrap;}
+.hack-desc{font-size:.85rem;color:var(--muted);line-height:1.6;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.c-links{display:flex;flex-direction:column;gap:10px;margin-top:1.4rem;}
+.c-link{display:flex;align-items:center;gap:12px;padding:.9rem 1.2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--cream);text-decoration:none;color:var(--ink2);font-size:.86rem;font-weight:500;transition:border-color .2s,background .2s,transform .35s cubic-bezier(.34,1.56,.64,1);}
+.c-link:hover{border-color:var(--border-strong);background:var(--cream2);transform:translateX(6px);}
+.c-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.c-form{display:flex;flex-direction:column;gap:10px;}
+.field{display:flex;flex-direction:column;gap:4px;}
+.field label{font-family:"Space Mono",monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.field input,.field textarea{background:var(--cream);border:1px solid var(--border);border-radius:9px;padding:.65rem .9rem;color:var(--ink);font-family:"Instrument Sans",sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:none;}
+.field input:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,95,255,.1);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.c-submit{padding:.8rem;border-radius:9px;background:var(--ink);color:var(--cream);border:none;cursor:none;font-family:"Space Mono",monospace;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700;transition:background .25s,transform .25s;}
+.c-submit:hover{background:var(--pink);transform:translateY(-2px);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:1.6rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.footer-mono{font-family:"Space Mono",monospace;font-size:.62rem;letter-spacing:.07em;color:var(--muted);}
+
+/* ═══ PROJECT MODAL DRAWER ═══ */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,24,20,0);z-index:500;pointer-events:none;transition:background .5s ease;}
+.modal-overlay.open{background:rgba(28,24,20,.55);pointer-events:all;}
+.modal-drawer{position:fixed;top:0;right:0;bottom:0;width:min(680px,100vw);background:var(--cream);z-index:501;transform:translateX(100%);transition:transform .6s cubic-bezier(.16,1,.3,1);overflow-y:auto;box-shadow:-20px 0 60px rgba(28,24,20,.15);}
+.modal-drawer.open{transform:translateX(0);}
+.modal-header{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;position:sticky;top:0;background:var(--cream);z-index:10;}
+.modal-close{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:none;cursor:none;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:background .2s,border-color .2s,transform .3s cubic-bezier(.34,1.56,.64,1);color:var(--muted);}
+.modal-close:hover{background:var(--cream2);border-color:var(--border-strong);transform:rotate(90deg);}
+.modal-eyebrow{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.modal-title{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;}
+.modal-body{padding:2rem 2.5rem 3rem;}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--border);margin-bottom:2.5rem;}
+.meta-cell{background:var(--cream);padding:1rem 1.2rem;}
+.meta-lbl{font-family:"Space Mono",monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.meta-val{font-weight:600;font-size:.88rem;color:var(--ink);}
+.case-section{margin-bottom:2.8rem;}
+.case-eyebrow{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;display:flex;align-items:center;gap:8px;}
+.case-eyebrow::before{content:"";display:block;width:14px;height:1px;background:var(--muted);}
+.case-h2{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.7rem;}
+.case-p{color:var(--ink2);font-size:.95rem;line-height:1.8;margin-bottom:.9rem;}
+.case-p strong{color:var(--ink);}
+.outcome-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--border);margin-top:1rem;}
+.oc{background:var(--cream);padding:1.2rem;}
+.oc-num{font-family:"Playfair Display",serif;font-size:1.8rem;font-weight:700;color:var(--pink);margin-bottom:3px;}
+.oc-lbl{font-size:.78rem;color:var(--muted);}
+.tech-used{display:flex;flex-wrap:wrap;gap:7px;margin-top:.8rem;}
+.modal-links{display:flex;gap:.8rem;margin-top:1.5rem;}
+
+/* SCROLL REVEAL */
+.fade{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1);}
+.fade.vis{opacity:1;transform:translateY(0);}
+.fd1{transition-delay:.08s}.fd2{transition-delay:.16s}.fd3{transition-delay:.24s}
+.fade-left{opacity:0;transform:translateX(-28px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1);}
+.fade-left.vis{opacity:1;transform:translateX(0);}
+.fade-scale{opacity:0;transform:scale(.95);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.fade-scale.vis{opacity:1;transform:scale(1);}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{padding:6.5rem 1.5rem 3rem;}
+  .stat-row{flex-wrap:wrap;}
+  .stat-item{flex:1 1 50%;}
+  .section{padding:3.5rem 1.5rem;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:.4rem;text-align:center;}
+  .scroll-hint{display:none;}
+  .modal-header{padding:1.5rem;}
+  .modal-body{padding:1.5rem;}
+  .outcome-row{grid-template-columns:1fr;}
+}
+
+/* CERTIFICATIONS */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.cert-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;background:var(--cream);display:flex;gap:1rem;align-items:flex-start;transition:background .2s,border-color .2s,transform .35s cubic-bezier(.34,1.56,.64,1);}
+.cert-card:hover{background:var(--cream2);border-color:var(--border-strong);transform:translateY(-4px);}
+.cert-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:var(--blue-soft);}
+.cert-name{font-weight:600;font-size:.92rem;color:var(--ink);margin-bottom:.25rem;}
+.cert-issuer{font-size:.82rem;color:var(--muted);}
+.cert-date{font-family:"Space Mono",monospace;font-size:.6rem;color:var(--muted);margin-top:.35rem;letter-spacing:.05em;}
+</style>
+</head>
+<body>
+
+
+
+<div class="page-loader" id="loader">
+  <div class="loader-text"><span class="loader-word">Swathi</span><span class="loader-word">Kumar</span><span class="loader-word">.</span></div>
+  <div class="loader-bar"></div>
+</div>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">SK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- MODAL OVERLAY + DRAWER -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+<div class="modal-drawer" id="modalDrawer">
+  <div class="modal-header">
+    <div>
+      <div class="modal-eyebrow" id="modalEyebrow"></div>
+      <div class="modal-title" id="modalTitle"></div>
+    </div>
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
+</div>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="blob" style="width:380px;height:380px;background:var(--pink);top:-100px;right:-80px;"></div>
+  <div class="blob" style="width:280px;height:280px;background:var(--blue);bottom:60px;right:260px;"></div>
+  <div class="blob" style="width:220px;height:220px;background:var(--green);bottom:-40px;left:120px;"></div>
+  <div class="hero-eyebrow"><span class="pulse-dot" style="margin-right:4px"></span> Open to Internships &amp; Research Roles</div>
+  <h1>
+    <span class="hero-line"><span class="hero-line-inner">Swathi</span></span>
+    <span class="hero-line"><span class="hero-line-inner outline">Kumar</span></span>
+    <span class="hero-line"><span class="hero-line-inner" style="color:var(--pink)">.</span></span>
+  </h1>
+  <p class="hero-sub">6th semester CS student at PES University EC Campus. I build systems at the intersection of IoT, cybersecurity, big data, and AI &#8212; and I care about impact.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">View My Work &#8594;</a>
+    <a href="/cdn-cgi/l/email-protection#3f4c485e4b5756544a525e4d0f0e0a7f58525e5653115c5052" class="btn-outline">Get In Touch</a>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<div class="stat-row">
+  <div class="stat-item fade"><div class="stat-num" style="color:var(--pink)">8.58</div><div class="stat-lbl">Current GPA</div></div>
+  <div class="stat-item fade fd1"><div class="stat-num" style="color:var(--blue)">8+</div><div class="stat-lbl">Projects built</div></div>
+  <div class="stat-item fade fd2"><div class="stat-num" style="color:var(--green)">98.6%</div><div class="stat-lbl">ICSE score</div></div>
+  <div class="stat-item fade fd3"><div class="stat-num" style="color:var(--pink)">3+</div><div class="stat-lbl">Hackathon wins</div></div>
+</div>
+<hr>
+
+<section class="section" id="about">
+  <div class="sec-eyebrow fade">Who I am</div>
+  <h2 class="sec-title fade">About Me</h2>
+  <div class="about-grid">
+    <div class="about-text fade-left">
+      <p>I&#8217;m <strong>Swathi Kumar</strong>, a 6th semester Computer Science student at <strong>PES University EC Campus</strong>, Bengaluru. I work at the intersection of IoT, cybersecurity, big data, AI and Cloud &#8212; and I believe technology should solve real problems for real people.</p>
+      <p>My journey started at 15, when I built an app to address menstrual hygiene inequality in rural India and reached the global stage of the Technovation Challenge. Since then I&#8217;ve gone from MIT App Inventor to AWS services, Apache Kafka, and LLM-driven architectures.</p>
+      <p>I&#8217;ve interned as a <strong>Research Intern at CCNCS PESU</strong>, where I worked on FailSafe (published at ICTCS 2025) and Unified AIOps in collaboration with <strong>Corestack</strong>. I also manage logistics at <strong>Weal</strong>.</p>
+      <p>I&#8217;m actively seeking <strong>internship and research opportunities</strong> in systems, security, and AI &#8212; where I can build things that matter and grow fast.</p>
+    </div>
+    <div class="info-stack fade fd1">
+      <div class="info-row"><div class="info-icon" style="background:var(--blue-soft)">&#127891;</div><div><div class="info-lbl">Degree</div><div class="info-val">B.Tech Computer Science</div></div></div>
+      <div class="info-row"><div class="info-icon" style="background:var(--pink-soft)">&#127963;</div><div><div class="info-lbl">University</div><div class="info-val">PES University EC Campus</div></div></div>
+      <div class="info-row"><div class="info-icon" style="background:var(--green-soft)">&#128205;</div><div><div class="info-lbl">Location</div><div class="info-val">Bengaluru, Karnataka</div></div></div>
+      <div class="info-row"><div class="info-icon" style="background:var(--blue-soft)">&#128222;</div><div><div class="info-lbl">Phone</div><div class="info-val">+91-8867027611</div></div></div>
+      <div class="info-row"><div class="info-icon" style="background:var(--green-soft)">&#128188;</div><div><div class="info-lbl">Status</div><div class="info-val" style="color:var(--green)">Actively Looking</div></div></div>
+      <div class="info-row"><div class="info-icon" style="background:var(--pink-soft)">&#11088;</div><div><div class="info-lbl">GPA</div><div class="info-val">8.58 / 10.0</div></div></div>
+    </div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="education">
+  <div class="sec-eyebrow fade">Academic journey</div>
+  <h2 class="sec-title fade">Education</h2>
+  <div class="edu-stack fade fd1">
+    <div class="edu-row"><div><div class="edu-school">PES University EC Campus</div><div class="edu-degree">B.Tech in Computer Science &#183; Pursuing</div></div><div><div class="edu-score" style="color:var(--pink)">8.58</div><div class="edu-year">2023 &#8211; Present</div></div></div>
+    <div class="edu-row"><div><div class="edu-school">Deeksha PU College</div><div class="edu-degree">12th Standard (PUC)</div></div><div><div class="edu-score" style="color:var(--blue)">94.16%</div><div class="edu-year">2023</div></div></div>
+    <div class="edu-row"><div><div class="edu-school">New Horizon Public School</div><div class="edu-degree">10th Standard (ICSE) &#183; 2nd in school &#183; 100 in CS &#183; 99 in Maths</div></div><div><div class="edu-score" style="color:var(--green)">98.6%</div><div class="edu-year">2021</div></div></div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="experience">
+  <div class="sec-eyebrow fade">Where I&#8217;ve worked</div>
+  <h2 class="sec-title fade">Experience</h2>
+  <div class="exp-stack">
+    <div class="exp-card fade fd1">
+      <div class="exp-icon" style="background:var(--pink-soft);color:var(--pink)">CC</div>
+      <div style="flex:1">
+        <div class="exp-title">Research Intern</div>
+        <div class="exp-org">Center for Computer Networks and Cyber Security (CCNCS) &#183; PES University &#183; On-site</div>
+        <div class="exp-period">Jun 2025 &#8211; Jul 2025 &#183; 2 months &#183; Bengaluru</div>
+        <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem;line-height:1.6">Worked on <strong style="color:var(--ink)">FailSafe</strong> &#8212; a self-healing IoT network with blockchain-enabled resilience, published at ICTCS 2025 Jaipur.</p>
+        <div class="exp-tags"><span class="tag tb">IoT</span><span class="tag tb">Blockchain</span><span class="tag tb">ML</span><span class="tag tb">Cybersecurity</span></div>
+      </div>
+    </div>
+    <div class="exp-card fade fd2">
+      <div class="exp-icon" style="background:var(--green-soft);color:var(--green)">WL</div>
+      <div style="flex:1">
+        <div class="exp-title">Logistics &amp; Operations</div>
+        <div class="exp-org">Weal</div>
+        <div class="exp-period">Mar 2025 &#8211; Present &#183; 1 yr 1 mo</div>
+        <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem;line-height:1.6">Managing operations and logistics workflows, applying analytical thinking to real-world supply chain challenges.</p>
+        <div class="exp-tags"><span class="tag tg">Operations Management</span><span class="tag tg">Logistics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="skills">
+  <div class="sec-eyebrow fade">What I know</div>
+  <h2 class="sec-title fade">Skills</h2>
+  <div class="skills-mosaic fade-scale fd1">
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--pink)"></span>Languages</div><div class="tags"><span class="tag tp">Python</span><span class="tag tp">Java</span><span class="tag tp">C/C++</span><span class="tag tp">Solidity</span><span class="tag tp">C#</span><span class="tag tp">SQL</span></div></div>
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--blue)"></span>Big Data &amp; Streaming</div><div class="tags"><span class="tag tb">Apache Kafka</span><span class="tag tb">Apache Flink</span><span class="tag tb">RabbitMQ</span><span class="tag tb">Apache Spark</span><span class="tag tb">Hadoop</span></div></div>
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--green)"></span>AI / ML</div><div class="tags"><span class="tag tg">scikit-learn</span><span class="tag tg">Decision Trees</span><span class="tag tg">Fuzzy Logic</span><span class="tag tg">LLMs</span><span class="tag tg">NLP</span></div></div>
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--pink)"></span>Security &amp; Networks</div><div class="tags"><span class="tag tp">Scapy</span><span class="tag tp">IDS</span><span class="tag tp">Packet Analysis</span><span class="tag tp">Blockchain</span><span class="tag tp">Ethereum</span></div></div>
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--blue)"></span>Web &amp; Tools</div><div class="tags"><span class="tag tb">Flask</span><span class="tag tb">MQTT</span><span class="tag tb">SQLite</span><span class="tag tb">Unity</span><span class="tag tb">Arduino</span><span class="tag tb">Git</span></div></div>
+    <div class="skill-cell"><div class="skill-cat"><span class="sdot" style="background:var(--green)"></span>CS Fundamentals</div><div class="tags"><span class="tag tg">DSA</span><span class="tag tg">IoT Systems</span><span class="tag tg">Cloud (AWS)</span><span class="tag tg">Smart Contracts</span><span class="tag tg">OS</span></div></div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="projects">
+  <div class="sec-eyebrow fade">What I&#8217;ve built</div>
+  <h2 class="sec-title fade">Projects</h2>
+  <div class="proj-grid">
+    <div class="proj-card fade fd1" onclick="openModal('iot')">
+      <div class="proj-top" style="background:var(--blue-soft)"><div class="proj-num">01 / Research Paper</div><div><div class="proj-name">Priority-Aware Big Data IoT Framework</div><div class="proj-badge tb">Fuzzy Logic &#183; LLMs &#183; Big Data</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Intelligent IoT data processing with 27-rule fuzzy logic, multi-pipeline routing across Kafka, Flink, Spark, RabbitMQ &amp; Hadoop, and LLM-driven contextual analysis.</p><div class="proj-tech"><span>Kafka</span><span>Flink</span><span>Spark</span><span>Hadoop</span><span>Fuzzy Logic</span><span>LLMs</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd2" onclick="openModal('failsafe')">
+      <div class="proj-top" style="background:var(--pink-soft)"><div class="proj-num">02 / ICTCS 2025 &#183; Research Intern @ CCNCS</div><div><div class="proj-name">FailSafe &#8212; Self-Healing IoT Network</div><div class="proj-badge tp">Blockchain &#183; ML &#183; IoT</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Self-healing avionics IoT framework with ML-based failure prediction and Ethereum blockchain for tamper-proof, audit-ready event logging. Published at ICTCS 2025.</p><div class="proj-tech"><span>Python</span><span>scikit-learn</span><span>MQTT</span><span>Ethereum</span><span>Solidity</span><span>Flask</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd3" onclick="openModal('aiops')">
+      <div class="proj-top" style="background:var(--green-soft)"><div class="proj-num">03 / Corestack Collaboration (ongoing)</div><div><div class="proj-name">Unified AIOps Platform</div><div class="proj-badge tg">AIOps &#183; RCA &#183; ML</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Industry-standard AIOps framework with intelligent alerting and root cause analysis. Built in collaboration with Corestack to reduce MTTR and alert fatigue.</p><div class="proj-tech"><span>ML</span><span>Telemetry</span><span>AIOps</span><span>Microservices</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd1" onclick="openModal('ids')">
+      <div class="proj-top" style="background:var(--blue-soft)"><div class="proj-num">04 / Network Security</div><div><div class="proj-name">Intrusion Detection System</div><div class="proj-badge tb">Network Security &#183; Python</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Real-time detection of port scans, SYN floods, and DNS spoofing using Python and Scapy &#8212; lightweight, zero external databases, live admin alerts.</p><div class="proj-tech"><span>Python</span><span>Scapy</span><span>Packet Analysis</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd2" onclick="openModal('kafka')">
+      <div class="proj-top" style="background:var(--pink-soft)"><div class="proj-num">05 / Data Engineering</div><div><div class="proj-name">Dynamic Content Streaming with Kafka</div><div class="proj-badge tp">Kafka &#183; Python &#183; Flask</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Adaptive Kafka platform automating topic lifecycle with approval-driven workflows, dynamic consumer subscriptions, and a real-time Flask control plane.</p><div class="proj-tech"><span>Apache Kafka</span><span>Python</span><span>SQLite</span><span>Flask</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd3" onclick="openModal('paddona')">
+      <div class="proj-top" style="background:var(--green-soft)"><div class="proj-num">06 / Social Impact &#183; Global Semi-finalist</div><div><div class="proj-name">Paddona &#8212; Menstrual Hygiene App</div><div class="proj-badge tg">MIT App Inventor &#183; Social Tech</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Android app connecting rural BPL cardholders with free sanitary pads and linking textile waste to pad production. Technovation 2019 global semi-finalist.</p><div class="proj-tech"><span>MIT App Inventor</span><span>Java</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd1" onclick="openModal('suraci')">
+      <div class="proj-top" style="background:#f0f0ff"><div class="proj-num">07 / Game Dev &#183; DeltaTime Top 10</div><div><div class="proj-name">Suraci &#8212; Myth-Inspired Combat Game</div><div class="proj-badge" style="color:#7c3aed;border-color:rgba(124,58,237,.3);background:#f5f3ff">Unity &#183; C# &#183; Game Design</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Unity 2D combat game inspired by Icarus (name reversed). Unique flipping-attack mechanic. Lead UI designer. Top 10 at DeltaTime Hackathon 2024.</p><div class="proj-tech"><span>Unity</span><span>C#</span><span>2D Physics</span><span>UI Design</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+    <div class="proj-card fade fd2" onclick="openModal('qr')">
+      <div class="proj-top" style="background:var(--cream2)"><div class="proj-num">08 / Utility Tool</div><div><div class="proj-name">QR Code Generator</div><div class="proj-badge tk">Python &#183; Utility</div></div></div>
+      <div class="proj-bot"><p class="proj-desc">Python tool converting any URL to a downloadable QR code. Smart feature: plain text inputs auto-link to their Wikipedia page. Used at college events and tech fairs.</p><div class="proj-tech"><span>Python</span><span>qrcode</span><span>Wikipedia API</span></div><div class="proj-arrow">View case study &#8594;</div></div>
+    </div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="achievements">
+  <div class="sec-eyebrow fade">Milestones</div>
+  <h2 class="sec-title fade">Achievements</h2>
+  <div class="ach-grid">
+    <div class="ach-card fade fd1"><div class="ach-icon" style="background:var(--blue-soft)">&#128196;</div><div><div class="ach-title">ICTCS 2025 &#8212; Published &amp; Presented</div><div class="ach-desc">FailSafe selected for publication and presentation at ICTCS 2025, Jaipur. Recognised for autonomous IoT fault recovery and immutable blockchain logging.</div></div></div>
+    <div class="ach-card fade fd2"><div class="ach-icon" style="background:var(--green-soft)">&#127942;</div><div><div class="ach-title">Technovation Challenge 2019 &#8212; Global Semi-finalist</div><div class="ach-desc">Global Semi-Finalist and Regional Pitch Winner for Paddona. Mentored by Adobe professionals.</div></div></div>
+    <div class="ach-card fade fd3"><div class="ach-icon" style="background:var(--pink-soft)">&#127891;</div><div><div class="ach-title">ICSE Class 10 &#8212; 2nd in School</div><div class="ach-desc">Ranked 2nd in school with 98.6%. Perfect 100 in Computer Applications and 99 in Mathematics.</div></div></div>
+    <div class="ach-card fade fd1"><div class="ach-icon" style="background:var(--blue-soft)">&#129351;</div><div><div class="ach-title">Ideathon 3.0 &#8212; IIIT Naya Raipur (2021)</div><div class="ach-desc">National Finalist for Paddona. Received Distinction Award and CNR Rao Scholarship.</div></div></div>
+    <div class="ach-card fade fd2"><div class="ach-icon" style="background:var(--blue-soft)">&#127891;</div><div><div class="ach-title">Prof. CNR Rao Merit Scholarship </div><div class="ach-desc">Awarded the Prof. CNR Rao Merit Scholarship from PES University twice for ranking among the top 25% of students in the Computer Science department.</div></div></div>
+    <div class="ach-card fade fd3"><div class="ach-icon" style="background:var(--green-soft)">&#127885;</div><div><div class="ach-title">Distinction Certificate </div><div class="ach-desc">Received the Distinction Certificate twice from PES University for outstanding academic performance across semesters.</div></div></div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="certifications">
+  <div class="sec-eyebrow fade">Credentials</div>
+  <h2 class="sec-title fade">Certifications</h2>
+  <div class="cert-grid">
+    <div class="cert-card fade fd1">
+      <div class="cert-icon">&#9729;</div>
+      <div>
+        <div class="cert-name">Beyond Cloud Computing Workshop</div>
+        <div class="cert-issuer">Nexus &#8211; AWS Champ Club &#183; PES University</div>
+        <div class="cert-date">Issued Feb 2026 &#183; Cloud Computing &#183; Amazon Web Services</div>
+      </div>
+    </div>
+    <div class="cert-card fade fd2">
+      <div class="cert-icon">&#128202;</div>
+      <div>
+        <div class="cert-name">Data Analytics with Python</div>
+        <div class="cert-issuer">IBM SkillsBuild &#183; CSRBOX&#174;</div>
+        <div class="cert-date">Issued Jan 2025 &#183; Credential ID: 1398 &#183; Data Analysis &#183; Python</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section" id="hackathons">
+  <div class="sec-eyebrow fade">Competitions</div>
+  <h2 class="sec-title fade">Hackathons</h2>
+  <div class="hack-stack">
+    <div class="hack-card fade fd1"><div class="hack-header"><div><div class="hack-name">Technovation Challenge 2019</div><div class="hack-year">2019 &#183; Global</div></div><span class="hack-result tp">Global Semi-finalist &#183; Regional Winner</span></div><p class="hack-desc">Built <strong>Paddona</strong> &#8212; an MIT App Inventor Android app connecting rural BPL cardholders with free sanitary pads and linking textile waste to pad production. Mentored by Adobe professionals.</p></div>
+    <div class="hack-card fade fd2"><div class="hack-header"><div><div class="hack-name">Ideathon 3.0 &#8212; SCInTFIC, IIIT Naya Raipur</div><div class="hack-year">2021 &#183; National</div></div><span class="hack-result tg">National Finalist &#183; Distinction Award</span></div><p class="hack-desc">Rebuilt Paddona in Java for national pitch. Received the <strong>Distinction Award and CNR Rao Scholarship</strong>.</p></div>
+    <div class="hack-card fade fd3"><div class="hack-header"><div><div class="hack-name">DeltaTime Game Development Hackathon</div><div class="hack-year">2024</div></div><span class="hack-result tb">Top 10 Finalist</span></div><p class="hack-desc">Lead UI designer for <strong>Suraci</strong> &#8212; a Unity 2D myth-inspired combat game with a unique flipping-attack mechanic. Top 10 finish.</p></div>
+  </div>
+</section>
+<hr>
+
+<section class="section" id="contact">
+  <div class="sec-eyebrow fade">Let&#8217;s talk</div>
+  <h2 class="sec-title fade">Get In Touch</h2>
+  <div class="contact-grid">
+    <div class="fade-left">
+      <p style="color:var(--muted);font-size:.97rem;max-width:360px;line-height:1.75">I&#8217;m actively looking for internships and research roles in systems, security, and AI. If you have an opportunity or just want to connect &#8212; I&#8217;d love to hear from you.</p>
+      <div class="c-links">
+        <a href="mailto:swathikumar015@gmail.com" class="c-link"><div class="c-icon" style="background:var(--pink-soft)">&#9993;</div>swathikumar015@gmail.com</a>
+        <a href="tel:+918867027611" class="c-link"><div class="c-icon" style="background:var(--green-soft)">&#128222;</div>+91-8867027611</a>
+        <a href="https://www.linkedin.com/in/swathi-kumar-4bb0b2345" target="_blank" class="c-link"><div class="c-icon" style="background:var(--blue-soft)">in</div>linkedin.com/in/swathi-kumar</a>
+        <a href="https://github.com/swathikumar" target="_blank" class="c-link"><div class="c-icon" style="background:var(--cream2)">&#9002;</div>GitHub</a>
+      </div>
+    </div>
+    <div class="c-form fade fd1">
+      <div class="field-row">
+        <div class="field"><label>Name</label><input type="text" placeholder="Your name"></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      </div>
+      <div class="field"><label>Subject</label><input type="text" placeholder="Internship opportunity / Research collaboration"></div>
+      <div class="field"><label>Message</label><textarea rows="5" placeholder="Hi Swathi, I came across your portfolio..."></textarea></div>
+      <button class="c-submit" onclick="handleSend(this)">Send Message &#8594;</button>
+    </div>
+  </div>
+</section>
+<hr>
+<footer>
+  <span class="footer-mono">Designed &amp; built by Swathi Kumar &#183; Bengaluru 2025</span>
+  <span class="footer-mono">PES University &#183; B.Tech CSE</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const PROJECTS = {
+  iot:{
+    eyebrow:"01 / Research Paper &#183; Fuzzy Logic &#183; Big Data",
+    title:"Priority-Aware Big Data IoT Framework",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Domain</div><div class="meta-val">Industrial IoT</div></div><div class="meta-cell"><div class="meta-lbl">Pipelines</div><div class="meta-val">Kafka &#183; Flink &#183; Spark &#183; Hadoop</div></div><div class="meta-cell"><div class="meta-lbl">Intelligence</div><div class="meta-val">Fuzzy Logic + LLMs</div></div><div class="meta-cell"><div class="meta-val" style="color:var(--blue)">Research Paper</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">IoT data floods systems without urgency awareness</div><p class="case-p">The rapid expansion of IoT devices creates massive heterogeneous data volumes. Existing frameworks treat all data equally — processing a critical sensor alarm with the same pipeline as a routine telemetry ping. This causes dangerous delays in emergencies and wastes compute on low-value data.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Three-tier priority routing with LLM intelligence</div><p class="case-p">A <strong>fuzzy logic inference system with 27 rules</strong> classifies events into Normal, Warning, or Critical based on contextual parameters. Each tier routes to its own optimised pipeline: <strong>Critical &#8594; Apache Kafka + Apache Flink</strong> (real-time), <strong>Warning &#8594; RabbitMQ + Apache Spark Streaming</strong>, <strong>Normal &#8594; Apache Hadoop</strong> (batch). An edge pre-processing layer handles noise reduction and feature extraction before cloud ingestion. Processed results are then analysed by an <strong>LLM</strong> for contextual interpretation and fault explanation.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tb">Apache Kafka</span><span class="tag tb">Apache Flink</span><span class="tag tb">RabbitMQ</span><span class="tag tb">Apache Spark Streaming</span><span class="tag tb">Apache Hadoop</span><span class="tag tp">Fuzzy Logic (27 rules)</span><span class="tag tp">Python</span><span class="tag tg">LLMs</span><span class="tag tg">Edge Computing</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num">3</div><div class="oc-lbl">Urgency-aware processing pipelines</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">27</div><div class="oc-lbl">Fuzzy logic inference rules</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">&#8595;</div><div class="oc-lbl">Reduced critical event latency vs single-pipeline</div></div></div></div>`
+  },
+  failsafe:{
+    eyebrow:"02 / ICTCS 2025 &#183; Research Intern @ CCNCS PESU",
+    title:"FailSafe &#8212; Self-Healing IoT Network",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Timeline</div><div class="meta-val">8 weeks</div></div><div class="meta-cell"><div class="meta-lbl">Domain</div><div class="meta-val">IoT &#183; Security &#183; Blockchain</div></div><div class="meta-cell"><div class="meta-lbl">Role</div><div class="meta-val">Solo Developer</div></div><div class="meta-cell"><div class="meta-lbl">Published</div><div class="meta-val" style="color:var(--pink)">ICTCS 2025, Jaipur</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">Safety-critical IoT systems fail silently and reactively</div><p class="case-p">Avionics sensor networks require continuous, accurate data streams. Traditional fault management detects failures only after sensors stop functioning, requiring manual intervention &#8212; dangerous in flight-critical contexts. Centralised logging systems are also vulnerable to tampering, making post-incident audits unreliable.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Predict. Heal. Record. Immutably.</div><p class="case-p">A <strong>Decision Tree classifier</strong> predicts early signs of sensor degradation, enabling pre-emptive activation of redundant sensors before failure occurs. A reactive layer detects actual outages and triggers autonomous recovery. All events are immutably recorded on an <strong>Ethereum blockchain via Solidity smart contracts</strong> &#8212; tamper-proof and audit-ready.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tp">Python</span><span class="tag tp">scikit-learn</span><span class="tag tp">Decision Trees</span><span class="tag tb">MQTT</span><span class="tag tb">Flask</span><span class="tag tg">Ethereum (Ganache)</span><span class="tag tg">Solidity</span><span class="tag tg">Web3.py</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results &amp; recognition</div><div class="outcome-row"><div class="oc"><div class="oc-num">0</div><div class="oc-lbl">Data loss during autonomous recovery</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">ICTCS</div><div class="oc-lbl">Selected for publication &amp; presentation, Jaipur 2025</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">100%</div><div class="oc-lbl">Tamper-proof log integrity via blockchain</div></div></div></div>`
+  },
+  aiops:{
+    eyebrow:"03 / Corestack Collaboration (ongoing)",
+    title:"Unified AIOps Platform",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Collaborating Co.</div><div class="meta-val">Corestack</div></div><div class="meta-cell"><div class="meta-lbl">Core Components</div><div class="meta-val">Intelligent Alerting &#183; RCA</div></div><div class="meta-cell"><div class="meta-lbl">Type</div><div class="meta-val">Industry AIOps Framework</div></div><div class="meta-cell"><div class="meta-val" style="color:var(--green)">Collaboration</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">Modern cloud infrastructure is too complex to monitor manually</div><p class="case-p">Modern cloud environments run on complex microservice architectures generating overwhelming telemetry &#8212; logs, metrics, and traces. Three core problems emerge at scale: <strong>High MTTR</strong> from slow manual correlation, <strong>Alert Fatigue</strong> from excessive irrelevant alerts, and <strong>Lack of Trust</strong> in opaque AI diagnosis models.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Proactive, transparent, self-healing monitoring</div><p class="case-p">An industry-standard AIOps framework built in collaboration with Corestack. Core components: <strong>Intelligent Alerting</strong> &#8212; ML-driven noise filtering that surfaces only actionable alerts with explainable context; <strong>Root Cause Analysis (RCA)</strong> &#8212; automated fault diagnosis that pinpoints the origin of issues across microservice chains, drastically reducing MTTR.</p><p class="case-p">Explainability is a design requirement &#8212; every alert includes a human-readable diagnosis so engineers trust and act on it rather than dismiss it as a black-box output.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tg">ML Anomaly Detection</span><span class="tag tg">Root Cause Analysis</span><span class="tag tb">Log Analysis</span><span class="tag tb">Metrics Pipelines</span><span class="tag tb">Distributed Tracing</span><span class="tag tp">Intelligent Alerting</span><span class="tag tp">Explainable AI</span><span class="tag tk">Python</span><span class="tag tk">Corestack Platform</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num">&#8595;</div><div class="oc-lbl">MTTR reduced via proactive fault detection</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">&#8595;</div><div class="oc-lbl">Alert fatigue cut through ML filtering</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">&#8593;</div><div class="oc-lbl">Engineer trust via explainable RCA</div></div></div></div>`
+  },
+  ids:{
+    eyebrow:"04 / Network Security",
+    title:"Intrusion Detection System",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Language</div><div class="meta-val">Python + Scapy</div></div><div class="meta-cell"><div class="meta-lbl">Detects</div><div class="meta-val">Port Scan &#183; SYN Flood &#183; DNS Spoof</div></div><div class="meta-cell"><div class="meta-lbl">Approach</div><div class="meta-val">Live Packet Analysis</div></div><div class="meta-cell"><div class="meta-val" style="color:var(--blue)">Zero external DBs</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">Low-level attacks slip past traditional defences</div><p class="case-p">Port scanning, SYN flooding, and DNS spoofing are entry-point attacks that traditional firewalls often miss. They hide in the noise of normal network activity and escalate into severe breaches compromising data integrity and availability.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Real-time packet analysis, no external databases</div><p class="case-p"><strong>Port Scans:</strong> Identified through excessive SYN packets to multiple ports from a single source IP. <strong>SYN Floods:</strong> Detected by tracking a high volume of half-open TCP connections. <strong>DNS Spoofing:</strong> Flagged by detecting mismatches between queried domains and IP responses. All alerts are logged in real time with timestamps and source info.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tb">Python</span><span class="tag tb">Scapy</span><span class="tag tp">Port Scan Detection</span><span class="tag tp">SYN Flood Detection</span><span class="tag tp">DNS Spoof Detection</span><span class="tag tk">Real-time Logging</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num">3</div><div class="oc-lbl">Attack types detected in real time</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">0</div><div class="oc-lbl">External databases or heavy dependencies</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">Live</div><div class="oc-lbl">Real-time alert logging</div></div></div></div>`
+  },
+  kafka:{
+    eyebrow:"05 / Data Engineering",
+    title:"Dynamic Content Streaming with Kafka",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Core Tech</div><div class="meta-val">Apache Kafka Admin API</div></div><div class="meta-cell"><div class="meta-lbl">Architecture</div><div class="meta-val">Multi-threaded &#183; Event-driven</div></div><div class="meta-cell"><div class="meta-lbl">Interface</div><div class="meta-val">Flask Web Control Plane</div></div><div class="meta-cell"><div class="meta-val" style="color:var(--pink)">Zero manual config</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">Static Kafka deployments can&#8217;t keep up with dynamic content</div><p class="case-p">Traditional Kafka deployments require manual topic provisioning and static consumer configuration. In fast-evolving content systems, this creates bottlenecks: delayed responsiveness, increased operational overhead, and poor scalability.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Fully automated, approval-driven topic lifecycle</div><p class="case-p">Using the <strong>Kafka Admin API</strong>, a multi-threaded Python producer dynamically creates and manages topics based on database-driven approval workflows. Consumers query a central SQLite metadata database to subscribe or unsubscribe from active topics at runtime &#8212; no restart or reconfiguration needed. A Flask web interface provides real-time visibility into topic states and subscription mappings.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tp">Apache Kafka</span><span class="tag tp">Kafka Admin API</span><span class="tag tb">Python</span><span class="tag tb">Multi-threading</span><span class="tag tg">SQLite</span><span class="tag tg">Flask</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num">0</div><div class="oc-lbl">Manual Kafka reconfigurations needed</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">Auto</div><div class="oc-lbl">Approval-driven dynamic topic creation</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">Live</div><div class="oc-lbl">Real-time Flask control plane</div></div></div></div>`
+  },
+  paddona:{
+    eyebrow:"06 / Social Impact &#183; Technovation 2019 Global Semi-finalist",
+    title:"Paddona &#8212; Menstrual Hygiene App",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Built when</div><div class="meta-val">Age 15 (2019)</div></div><div class="meta-cell"><div class="meta-lbl">Technology</div><div class="meta-val">MIT App Inventor &#8594; Java</div></div><div class="meta-cell"><div class="meta-lbl">Recognition</div><div class="meta-val">Global Semi-finalist</div></div><div class="meta-cell"><div class="meta-lbl">Mentors</div><div class="meta-val" style="color:var(--green)">Adobe Professionals</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">82% of women in India lack access to sanitary products</div><p class="case-p">Only 18% of Indian women have access to proper sanitary products. In rural areas, this leads to widespread infections, reproductive health issues, and in extreme cases, surgeries like hysterectomies. Inspired by the real story of a young girl affected by poor menstrual hygiene, our team of five 15-year-olds set out to address this.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Connecting BPL cardholders to free sanitary products</div><p class="case-p"><strong>Paddona</strong> is an Android app connecting menstruators holding BPL (Below Poverty Line) cards with free or affordable sanitary pads through verified distribution partners. The app also links textile manufacturers with pad producers &#8212; creating a circular economy where excess textile waste is repurposed for pad production. In 2021, it was rebuilt in Java for the Ideathon 3.0 national competition, winning the <strong>Distinction Award and CNR Rao Scholarship</strong>.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tg">MIT App Inventor</span><span class="tag tg">Java (2021 rebuild)</span><span class="tag tb">Android</span><span class="tag tb">UI/UX Design</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Recognition &amp; impact</div><div class="outcome-row"><div class="oc"><div class="oc-num">Global</div><div class="oc-lbl">Semi-finalist, Technovation 2019</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">National</div><div class="oc-lbl">Finalist, Ideathon 3.0 &#8212; IIIT Naya Raipur</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">Adobe</div><div class="oc-lbl">Mentored by Adobe professionals</div></div></div></div>`
+  },
+  suraci:{
+    eyebrow:"07 / Game Dev &#183; DeltaTime Hackathon 2024",
+    title:"Suraci &#8212; Myth-Inspired Combat Game",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Engine</div><div class="meta-val">Unity</div></div><div class="meta-cell"><div class="meta-lbl">Language</div><div class="meta-val">C#</div></div><div class="meta-cell"><div class="meta-lbl">My Role</div><div class="meta-val">Lead UI Designer</div></div><div class="meta-cell"><div class="meta-val" style="color:#7c3aed">Top 10 &#8212; DeltaTime 2024</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Concept</div><div class="case-h2">Icarus, reversed &#8212; a game about falling with style</div><p class="case-p">Suraci (Icarus reversed) is a 2D Unity combat game inspired by the Greek myth. A unique <strong>flipping mechanic</strong> lets players invert their position mid-combat, turning incoming attacks into counterattack opportunities &#8212; adding a layer of strategy that keeps gameplay fresh.</p></div>
+    <div class="case-section"><div class="case-eyebrow">My Contribution</div><div class="case-h2">Lead UI design &amp; gameplay systems</div><p class="case-p">I designed the complete interface &#8212; main menu, in-game HUD, health bars, ability indicators &#8212; with a mythological, immersive feel. I also co-developed the flipping mechanic in C#, handling the physics state transitions so the flip felt weighty and intentional. Player feedback specifically called out the combat feel as a highlight.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag" style="color:#7c3aed;border-color:rgba(124,58,237,.3);background:#f5f3ff">Unity</span><span class="tag" style="color:#7c3aed;border-color:rgba(124,58,237,.3);background:#f5f3ff">C#</span><span class="tag tk">2D Physics</span><span class="tag tk">UI/UX Design</span><span class="tag tk">Sprite Animation</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num" style="color:#7c3aed">Top 10</div><div class="oc-lbl">DeltaTime Gaming Hackathon 2024</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">Flip</div><div class="oc-lbl">Unique mechanic praised by judges</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">&#10003;</div><div class="oc-lbl">Polished UI delivered under 24hr deadline</div></div></div></div>`
+  },
+  qr:{
+    eyebrow:"08 / Utility Tool &#183; Python",
+    title:"QR Code Generator",
+    body:`<div class="meta-grid"><div class="meta-cell"><div class="meta-lbl">Language</div><div class="meta-val">Python</div></div><div class="meta-cell"><div class="meta-lbl">Special Feature</div><div class="meta-val">Wikipedia auto-link</div></div><div class="meta-cell"><div class="meta-lbl">Used at</div><div class="meta-val">College events &amp; fairs</div></div><div class="meta-cell"><div class="meta-val" style="color:var(--green)">Live &amp; Used</div></div></div>
+    <div class="case-section"><div class="case-eyebrow">The Problem</div><div class="case-h2">Sharing links at events is slow and error-prone</div><p class="case-p">During college events and presentations, sharing URLs verbally leads to typos and frustration. A fast, zero-friction QR generator would eliminate this entirely.</p></div>
+    <div class="case-section"><div class="case-eyebrow">The Solution</div><div class="case-h2">Instant QR codes with a smart Wikipedia feature</div><p class="case-p">The tool instantly converts any URL to a downloadable QR code. The standout feature: if the user inputs <strong>plain text</strong> (not a URL), the tool automatically links it to its Wikipedia page and generates a QR code for that &#8212; perfect for reference cards and study materials.</p></div>
+    <div class="case-section"><div class="case-eyebrow">Technical Stack</div><div class="case-h2">Built with</div><div class="tech-used"><span class="tag tk">Python</span><span class="tag tk">qrcode library</span><span class="tag tk">Pillow (PIL)</span><span class="tag tk">Wikipedia API</span></div></div>
+    <div class="case-section"><div class="case-eyebrow">Outcome</div><div class="case-h2">Results</div><div class="outcome-row"><div class="oc"><div class="oc-num">Instant</div><div class="oc-lbl">URL-to-QR conversion</div></div><div class="oc"><div class="oc-num" style="color:var(--blue)">Wiki</div><div class="oc-lbl">Auto Wikipedia linking for text inputs</div></div><div class="oc"><div class="oc-num" style="color:var(--green)">Live</div><div class="oc-lbl">Used at real college events</div></div></div></div>`
+  }
+};
+
+function openModal(id){
+  const p = PROJECTS[id];
+  document.getElementById("modalEyebrow").innerHTML = p.eyebrow;
+  document.getElementById("modalTitle").innerHTML = p.title;
+  document.getElementById("modalBody").innerHTML = p.body;
+  document.getElementById("modalOverlay").classList.add("open");
+  document.getElementById("modalDrawer").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("open");
+  document.getElementById("modalDrawer").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+(function(){
+  var done=false;
+  function go(){if(done)return;done=true;document.getElementById("loader").classList.add("done");}
+  setTimeout(go,1500);
+  document.addEventListener("DOMContentLoaded",function(){setTimeout(go,1200);});
+  window.addEventListener("load",function(){setTimeout(go,300);});
+})();
+
+
+const cur=document.getElementById("cur"),ring=document.getElementById("ring");
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;});
+(function tick(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur.style.left=mx+"px";cur.style.top=my+"px";ring.style.left=rx+"px";ring.style.top=ry+"px";requestAnimationFrame(tick);})();
+document.querySelectorAll("a,button,.proj-card,.ach-card,.hack-card,.exp-card,.c-link,.stat-item,.info-row").forEach(el=>{
+  el.addEventListener("mouseenter",()=>{cur.classList.add("hov");ring.classList.add("hov");});
+  el.addEventListener("mouseleave",()=>{cur.classList.remove("hov");ring.classList.remove("hov");});
+});
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("vis");}),{threshold:.07});
+document.querySelectorAll(".fade,.fade-left,.fade-scale").forEach(el=>obs.observe(el));
+window.addEventListener("scroll",()=>document.getElementById("nav").classList.toggle("scrolled",window.scrollY>60));
+function handleSend(btn){btn.textContent="Sent! &#10003;";btn.style.background="var(--green)";setTimeout(()=>{btn.textContent="Send Message &#8594;";btn.style.background="";},3000);}
+</script>
+</body>
+</html>
